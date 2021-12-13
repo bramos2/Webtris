@@ -1,0 +1,344 @@
+/* look at these fonhts i stole from google*/
+@import url('https://fonts.googleapis.com/css?family=K2D|Share+Tech+Mono');
+
+body { overflow: hidden; }
+
+input { background-color: #78AFD3; }
+
+input[type=button] { border-radius: 5px; }
+input[type=button][value="Off"] { background-color: #5499C7; }
+
+input:disabled {
+	border-style: inset;
+	background-color: #59B5F3;
+}
+
+h5 {
+	font-family: Share Tech Mono, Monaco, Consolas, monospace;
+	color: #EE3B31;
+}
+
+/* styling for the canvas */
+#tetris {
+	/* center the canvas */
+	padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+/* styling for the svg that goes over the canvas */
+#tetris-over {
+	padding-left: 0;
+    padding-right: 0;
+    margin-left: 0px;
+	position: absolute;
+	top: 8px;
+    z-index: 2;
+}
+
+/* styling for the svg that goes over the canvas */
+#vfx {
+	padding-left: 0;
+    padding-right: 0;
+    margin-left: 0px;
+	position: absolute;
+	top: 8px;
+    z-index: 3;
+}
+
+/* debug module */
+#debug {
+	position: absolute;
+	font-family: Tahoma;
+	font-size: 10pt;
+	text-shadow:
+		-1px -1px 0 #FFFFFF,
+		 1px -1px 0 #FFFFFF,
+		-1px  1px 0 #FFFFFF,
+		 1px  1px 0 #FFFFFF;
+    z-index: 10;
+}
+
+/* gui module*/
+#info {
+	padding-left: 0;
+    padding-right: 0;
+    margin-left: 8.5px;
+	position: absolute;
+	left: 16px;
+	top: 8px;
+    z-index: 4;
+	font-family: K2D, Arial, sans-serif;
+	font-size:24pt;
+	text-shadow:
+		-1px -1px 0 #000000,
+		 1px -1px 0 #000000,
+		-1px  1px 0 #000000,
+		 1px  1px 0 #000000;
+}
+
+/* replay icon */
+#rep {
+	position: absolute;
+	right: 64px;
+	top: 0px;
+	width: 64px;
+	height: 64px;
+	z-index: 5;
+}
+
+/* gear icon */
+#gear {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	width: 64px;
+	height: 64px;
+	z-index: 5;
+}
+
+/* replay div */
+#replay {
+	font-family: K2D, Tahoma, sans-serif;
+	background-color: #D0D0E2;
+	position: absolute;
+	right: 128px;
+	top: 5px;
+	padding: 2px 8px;
+	width: 300px;
+	height: 370px;
+	max-height: 370px;
+	display: none;
+	outline: 5px solid #48AECC;
+	z-index: 6;
+	overflow: hidden;
+	text-shadow:
+		-1px -1px 0 #F8F2EA,
+		 1px -1px 0 #F8F2EA,
+		-1px  1px 0 #F8F2EA,
+		 1px  1px 0 #F8F2EA;
+}
+
+#replay_name { font-weight: bold; }
+#replay_name a { color: #D522E0; }
+
+#playback-container {
+	text-align: center;
+	margin: 10px;
+}
+
+#playback {
+	text-align: center;
+	width: 50px;
+}
+
+/* settings div */
+#settings {
+	font-family: K2D, Tahoma, sans-serif;
+	background-color: #D0E2D0;
+	position: absolute;
+	right: 64px;
+	top: 5px;
+	padding: 2px 8px;
+	width: 300px;
+	height: 370px;
+	max-height: 370px;
+	display: none;
+	outline: 5px solid #48CCAE;
+	z-index: 6;
+	overflow: hidden;
+	text-shadow:
+		-1px -1px 0 #F8F2EA,
+		 1px -1px 0 #F8F2EA,
+		-1px  1px 0 #F8F2EA,
+		 1px  1px 0 #F8F2EA;
+}
+
+#settings h2, #replay h2  {
+	font-family: Share Tech Mono, Monaco, Consolas, monospace;
+	text-align: center;
+	margin: 10px;
+}
+
+#tileslider {
+	background-color: #00000000;
+	width: 250px;
+	display: block;
+	margin: auto;
+}
+
+#gsetting, #controls {
+	display: none;
+}
+
+#controls-player {
+	float: left;
+	position: absolute;
+	padding-top: 10px;
+}
+
+#controls-player p { margin: 0px; }
+
+#controls-controls {
+	text-align: right;
+	width: 180px;
+	float: left;
+	padding-right: 10px;
+}
+
+#controls-controls  input{ background-color: #D0DBE2; }
+
+#controls-player input {
+	background-color: #78AFD3;	
+	margin: 10px 10px 0px 10px;
+	padding: 3px;
+}
+
+#controls-preset {
+	width: 100px;
+	margin-top: 15px;
+	text-align: center;
+	float: right;
+}
+
+#controls-preset input {
+	width: 85px;
+}
+
+#loadscreen {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	overflow: hidden;
+	background-color: #FFFFFF;
+	z-index: 10;
+	
+}
+
+.set-d  {
+	padding: 10px;
+}
+
+.set-d table  { width: 100%; }
+
+.set-d td  {
+	padding: 5px;
+	min-width: 40px;
+}
+
+.set-bgr {
+	background-color: #B0B0D2;
+	border-radius: 20px;
+}
+
+.set-bg {
+	background-color: #B0D2B0;
+	border-radius: 20px;
+}
+
+.arrow {
+	color: blue;
+	vertical-align: middle;
+	background-color: inherit;
+	width: 32px;
+	height: 32px;
+	padding: 0px;
+}
+
+.flip { transform: scaleX(-1); }
+
+/* exactly what it says on the tin */
+.invisible { display: none;}
+
+/* selected options in the menu*/
+.st-selected1 {
+	color: #00F000;
+	background-image: radial-gradient(#FFFFFF, #FFFFFF00);
+	border-radius: 50%;
+	
+}
+.st-selected2 {
+	color: #0000F0;
+	background-image: radial-gradient(#FFFFFF, #FFFFFF00);
+	border-radius: 50%;
+	
+}
+.st-selected3 {
+	color: #F00000;
+	background-image: radial-gradient(#FFFFFF, #FFFFFF00);
+	border-radius: 50%;
+	
+}
+.st-selected4 {
+	color: #F020C0;
+	background-image: radial-gradient(#FFFFFF, #FFFFFF00);
+	border-radius: 50%;
+	
+}
+.st-selected5 {
+	color: #C020C0;
+	background-image: radial-gradient(#FFFFFF, #FFFFFF00);
+	border-radius: 50%;
+	
+}
+
+.bg {
+	left: 0px; top: 0px;
+	position: absolute;
+	z-index: -1;
+	margin: 0px; padding: 0px;
+	width: 100%; height: 100%;
+}
+
+.transparent-bg {
+	background-color: #00000000;
+}
+
+#bg0 {  background: #000000 url("bg/bg0.gif") no-repeat center top / contain; }
+#bg1 {  background: #000000 url("bg/bg1.gif") no-repeat center top / contain; }
+#bg2 {  background: #000000 url("bg/bg2.gif") no-repeat center top / contain; }
+#bg3 {  background: #000000 url("bg/bg3.gif") no-repeat center top / contain; }
+#bg4 {  background: #000000 url("bg/bg4.gif") no-repeat center top / contain; }
+#bg5 {  background: #000000 url("bg/bg5.gif") no-repeat center top / contain; }
+#bg6 {  background: #000000 url("bg/bg6.gif") no-repeat center top / contain; }
+#bg7 {  background: #000000 url("bg/bg7.gif") no-repeat center top / contain; }
+#bg8 {  background: #000000 url("bg/bg8.gif") no-repeat center top / contain; }
+#bg9 {  background: #000000 url("bg/bg9.gif") no-repeat center top / contain; }
+#bg10 { background: #000000 url("bg/bg0.gif") no-repeat center top / contain; }
+#bg11 { background: #000000 url("bg/bg1.gif") no-repeat center top / contain; }
+#bg12 { background: #000000 url("bg/bg2.gif") no-repeat center top / contain; }
+#bg13 { background: #000000 url("bg/bg3.gif") no-repeat center top / contain; }
+#bg14 { background: #000000 url("bg/bg4.gif") no-repeat center top / contain; }
+#bg15 { background: #000000 url("bg/bg5.gif") no-repeat center top / contain; }
+#bg16 { background: #000000 url("bg/bg6.gif") no-repeat center top / contain; }
+#bg17 { background: #000000 url("bg/bg7.gif") no-repeat center top / contain; }
+#bg18 { background: #000000 url("bg/bg8.gif") no-repeat center top / contain; }
+#bg19 { background: #000000 url("bg/bg9.gif") no-repeat center top / contain; }
+#bg20 { background: #000000 url("bg/bg0.gif") no-repeat center top / contain; }
+
+
+#dbg0 {  background: #000000 url("bg/dbg0.png")  no-repeat center top / contain; }
+#dbg1 {  background: #000000 url("bg/dbg1.png")  no-repeat center top / contain; }
+#dbg2 {  background: #000000 url("bg/dbg2.png")  no-repeat center top / contain; }
+#dbg3 {  background: #000000 url("bg/dbg3.png")  no-repeat center top / contain; }
+#dbg4 {  background: #000000 url("bg/dbg4.png")  no-repeat center top / contain; }
+#dbg5 {  background: #000000 url("bg/dbg5.png")  no-repeat center top / contain; }
+#dbg6 {  background: #000000 url("bg/dbg6.png")  no-repeat center top / contain; }
+#dbg7 {  background: #000000 url("bg/dbg7.png")  no-repeat center top / contain; }
+#dbg8 {  background: #000000 url("bg/dbg8.png")  no-repeat center top / contain; }
+#dbg9 {  background: #000000 url("bg/dbg9.png")  no-repeat center top / contain; }
+#dbg10 { background: #000000 url("bg/dbg10.png") no-repeat center top / contain; }
+#dbg11 { background: #000000 url("bg/dbg11.png") no-repeat center top / contain; }
+#dbg12 { background: #000000 url("bg/dbg12.png") no-repeat center top / contain; }
+#dbg13 { background: #000000 url("bg/dbg13.png") no-repeat center top / contain; }
+#dbg14 { background: #000000 url("bg/dbg14.png") no-repeat center top / contain; }
+#dbg15 { background: #000000 url("bg/dbg15.png") no-repeat center top / contain; }
+#dbg16 { background: #000000 url("bg/dbg16.png") no-repeat center top / contain; }
+#dbg17 { background: #000000 url("bg/dbg17.png") no-repeat center top / contain; }
+#dbg18 { background: #000000 url("bg/dbg18.png") no-repeat center top / contain; }
+#dbg19 { background: #000000 url("bg/dbg19.png") no-repeat center top / contain; }
+#dbg20 { background: #000000 url("bg/dbg20.png") no-repeat center top / contain; }

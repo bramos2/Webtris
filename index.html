@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<!-- PAGE STARTS HERE -->
+<html lang="en">
+	<!-- HEADER STARTS HERE -->
+	<head>
+		<!-- title that shows on the title bar -->
+		<title>Webtris</title>
+		
+		<meta charset="utf-8"/>
+		
+		<!-- EXTERNAL LINKS -->
+		<link rel="stylesheet" type="text/css" href="css.css" />	
+		<link rel="stylesheet" type="text/css" href="a.css" />	
+		<script src="keys.js"></script>
+		<script src="sounds.js"></script>
+		<script src="block.js"></script>
+		<script src="floorspark.js"></script> 
+		<script src="rng.js"></script> 
+		<script src="replay.js"></script> 
+		<script src="draw.js"></script> 
+		<script src="settings.js"></script>
+		<script src="cookie.js"></script>
+		<script src="main.js"></script>
+	</head>
+	
+	<!-- BODY STARTS HERE -->
+	<body onresize="refreshCanvasSize()" onload="main()">
+		<!-- this p tag is going to be empty most of the time, 
+		but in the event i need to debug smth, one of the 
+		scripts will output here -->
+		<p id="debug"></p>
+		<!-- the backgrounds all fill separate divs so that they load when the page does-->
+		<div class="bg" id="bg"></div>
+		<div class="bg" id="bg0"></div>
+		<div class="bg" id="bg1"></div>
+		<div class="bg" id="bg2"></div>
+		<div class="bg" id="bg3"></div>
+		<div class="bg" id="bg4"></div>
+		<div class="bg" id="bg5"></div>
+		<div class="bg" id="bg6"></div>
+		<div class="bg" id="bg7"></div>
+		<div class="bg" id="bg8"></div>
+		<div class="bg" id="bg9"></div>
+		<div class="bg" id="bg10"></div>
+		<div class="bg" id="bg11"></div>
+		<div class="bg" id="bg12"></div>
+		<div class="bg" id="bg13"></div>
+		<div class="bg" id="bg14"></div>
+		<div class="bg" id="bg15"></div>
+		<div class="bg" id="bg16"></div>
+		<div class="bg" id="bg17"></div>
+		<div class="bg" id="bg18"></div>
+		<div class="bg" id="bg19"></div>
+		<div class="bg" id="bg20"></div>
+		
+		<div class="bg" id="dbg0"></div>
+		<div class="bg" id="dbg1"></div>
+		<div class="bg" id="dbg2"></div>
+		<div class="bg" id="dbg3"></div>
+		<div class="bg" id="dbg4"></div>
+		<div class="bg" id="dbg5"></div>
+		<div class="bg" id="dbg6"></div>
+		<div class="bg" id="dbg7"></div>
+		<div class="bg" id="dbg8"></div>
+		<div class="bg" id="dbg9"></div>
+		<div class="bg" id="dbg10"></div>
+		<div class="bg" id="dbg11"></div>
+		<div class="bg" id="dbg12"></div>
+		<div class="bg" id="dbg13"></div>
+		<div class="bg" id="dbg14"></div>
+		<div class="bg" id="dbg15"></div>
+		<div class="bg" id="dbg16"></div>
+		<div class="bg" id="dbg17"></div>
+		<div class="bg" id="dbg18"></div>
+		<div class="bg" id="dbg19"></div>
+		<div class="bg" id="dbg20"></div>
+		
+		<!-- the actual canvas -->
+		<canvas id="tetris" width="240" height="135">
+		</canvas>
+		
+		<!-- a div that gets filled with GUI nonsense -->
+		<div id="info"></div>
+		
+		<div id="loadscreen">
+			<p>&nbsp;&nbsp;&nbsp; now loading... please wait warmly.</p>
+		</div>
+		
+		
+		<!-- replay -->
+		<input type="image" id="rep" src="img/replay.svg" class="transparent-bg" onclick="toggle_replay()"/>
+		<div id="replay">
+			<h2>Replays</h2>
+			<div id="replay_inner" class="set-bgr set-d">
+				<p id="replay_name"><em>No replay loaded.</em></p>
+				
+				<br />
+				<p>Load replay from file:</p>
+				<input type="file" id="file_in" name="replay" accept=".mrp" onchange="load_replay(this.files)" />
+				
+				<div id="playback-container">
+					<input type="button" id="playback" value="Play" onclick="playback()" disabled />
+				</div>
+				
+				<h5 id="replay_info"></h5>
+			</div>
+		</div>
+		
+		<!-- settings -->
+		<input type="image" id="gear" src="img/gear.svg" class="transparent-bg" onclick="toggle_preferences()"/>
+		<div id="settings">
+			<div id="aesthetics">
+				<h2><input type="image" class="arrow flip" src="img/arrow.svg" onclick="settings_swap(2)"/>&nbsp;&nbsp;Aesthetics&nbsp;&nbsp;<input type="image" class="arrow" src="img/arrow.svg" onclick="settings_swap(1)"/></h2>
+				<div class="set-bg set-d">
+					<!-- a table holding all of the settings, exept the player color -->
+					<table>
+						<tr><td title="Background music toggle.">Music:</td><td><input type="button" id="bgm_button" onclick="toggle_music()"/></td>
+							<td title="Sound effect music toggle.">Sound:</td><td><input type="button" id="se_button" onclick="toggle_sfx()"/></td></tr>
+						<tr><td title="Toggles the gridlines in the background of the board.">Grid:</td><td><input type="button" id="grid_button" onclick="toggle_grid()"/></td>
+							<td title="Toggles the outline of the bricks placed on the board.">Outline:</td><td><input type="button" id="outline_button" onclick="toggle_outline()"/></td></tr>
+						<tr><td title="Toggles various visual effects.">VFX:</td><td><input type="button" id="vfx_button" onclick="toggle_vfx()"/></td>
+							<td title="Toggles the &quot;ghost&quot; preview that shows where the current block will be placed.">Ghost:</td><td><input type="button" id="ghost_button" onclick="toggle_ghost()"/></td></tr>
+						<tr><td title="Toggles the background that displays on the page.">BG:</td><td><input type="button" id="bg_button" onclick="toggle_bg()"/></td>
+							<td title="Toggles a dark underlay that renders below the board.">Underlay:</td><td><input type="button" id="underlay_button" onclick="toggle_underlay()"/></td></tr>
+						<tr><td id="tilesizep" colspan="2">Size: </td>
+							<td title="When enabled, the game will automagically resize to fit the browser window.">Auto resize:</td><td><input type="button" id="resize_button" onclick="toggle_autoresize()"/></td></tr>
+					</table>
+					
+					<input type="range" id="tileslider" min="14" max="98" value="28" class="slider" oninput="change_tilesize(this.value)"
+						title="Adjust this slider to change the size of what is displayed on screen." />
+					<div id="pcolor" title="Click one of the buttons to change the color of the first player. Only available in 1P.">
+						<p>Player color: </p>
+						<p style="text-align:center">
+							<input type="button" style="background-color: red;" onclick="change_player(1)"/>
+							<input type="button" style="background-color: cyan;" onclick="change_player(2)"/>
+							<input type="button" style="background-color: yellow;" onclick="change_player(3)"/>
+							<input type="button" style="background-color: purple;" onclick="change_player(4)"/>
+							<input type="button" style="background-color: black;" onclick="change_player(5)"/>
+							<input type="button" style="background-color: green;" onclick="change_player(6)"/>
+							<input type="button" style="background-color: orange;" onclick="change_player(7)"/>
+							<input type="button" style="background-color: pink;" onclick="change_player(8)"/>
+							<input type="button" style="background-color: brown;" onclick="change_player(9)"/>
+							<input type="button" style="background-color: blue;" onclick="change_player(10)"/>
+							<input type="button" style="background-color: white;" onclick="change_player(11)"/>
+						</p>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div id="controls">
+				<h2><input type="image" class="arrow flip" src="img/arrow.svg" onclick="settings_swap(0)"/>&nbsp;&nbsp;&nbsp;Controls&nbsp;&nbsp;&nbsp;<input type="image" class="arrow" src="img/arrow.svg" onclick="settings_swap(2)"/></h2>
+				
+				<div id="controls-controls" class="set-bg" title="Click on a text box to change the key for that control.">
+					<div id="controls-player" title="Click on a button to change the player you want to map keys to.">
+						<input id="remap-p1" type="button" onclick="set_remap_pno(1)" value="P1" disabled />
+						<p></p> <!-- fake br because chrome is gay -->
+						<input id="remap-p2" type="button" onclick="set_remap_pno(2)" value="P2" />
+					</div>
+				
+					<p>Up: <input type="text" id="fc-up" size="9" onclick="select_control_field(this)" readonly /></p>
+					<p>Down: <input type="text" id="fc-down" size="9" onclick="select_control_field(this)" readonly /></p>
+					<p>Left: <input type="text" id="fc-left" size="9" onclick="select_control_field(this)" readonly /></p>
+					<p>Right: <input type="text" id="fc-right" size="9" onclick="select_control_field(this)" readonly /></p>
+					<p>"A" Button: <input type="text" id="fc-lr" size="9" onclick="select_control_field(this)" readonly /></p>
+					<p>"B" Button: <input type="text" id="fc-rr" size="9" onclick="select_control_field(this)" readonly /></p>
+					<p>"C" Button: <input type="text" id="fc-hold" size="9" onclick="select_control_field(this)" readonly /></p>
+				</div>
+				
+				
+				<div id="controls-preset" class="set-bg" title="Click on a preset to map a set of preset keys to the selected player.">
+					<h3>Presets</h3>
+					<p><input type="button" onclick="set_preset(0, remap_pno)" value="Default"/></p>
+					<p><input type="button" onclick="set_preset(1, remap_pno)" value="Reverse" class="invisible"/></p>
+					<p><input type="button" onclick="set_preset(2, remap_pno)" value="Standard"/></p>
+					<p><input type="button" onclick="set_preset(3, remap_pno)" value="Weird"/></p>
+					<p><input type="button" onclick="set_preset(4, remap_pno)" value="WASD"/></p>
+					<p><input type="button" onclick="set_preset(5, remap_pno)" value="Dvorak"/></p>
+				</div>
+			</div>
+				
+				
+			<div id="gsetting">
+				<h2><input type="image" class="arrow flip" src="img/arrow.svg" onclick="settings_swap(1)"/>&nbsp;Game Setting&nbsp;<input type="image" class="arrow" src="img/arrow.svg" onclick="settings_swap(0)"/></h2>
+				<div class="set-bg set-d">
+					<table>
+						<tr title="When enabled, pressing up to teleport the current block to the ground will not cause it to automatically lock."><td>Special Drop: </td><td><input type="button" id="t-sdrop_button" onclick="toggle_t_sdrop()"/></td></tr>
+						<tr title="When enabled, pressing button &quot;C&quot; will swap the current block with a &quot;held&quot; block."><td>Hold: </td><td><input type="button" id="t-hold_button" onclick="toggle_t_hold()"/></td></tr>
+						<tr title="When enabled, blocks can be prerotated or preheld by pressing instead of holding the appropriate rotate button during piece delay. Normal prerotation/prehold will still work."><td>EZ Prerotate: </td><td><input type="button" id="t-ezpre_button" onclick="toggle_t_ezpre()"/></td></tr>
+					</table>
+					<h5>These changes will take effect when you start a new game.</h5>
+				</div>
+			</div>
+		</div>
+	
+	</body>
+	<!-- this is a lot longer than it was initially and that makes me super sad -->
+</html>
